@@ -719,371 +719,208 @@ code{font-family:monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;bor
 <!-- ⑧ AI 관리 상세 -->
 <template id="t-ai-manage-detail">
   <div class="bc"><a onclick="go('dashboard')">AI</a><span class="bc-sep">/</span><a onclick="go('ai-manage-list')">AI 관리</a><span class="bc-sep">/</span><span class="bc-cur">Notion AI</span></div>
-  <div style="flex:1;overflow-y:auto;">
+  <div style="flex:1;overflow-y:auto;background:#fafbfd;">
 
-    <!-- 상단 헤더 -->
-    <div style="background:#fff;border-bottom:1px solid #d4dbe4;padding:20px 36px 16px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span class="pill p-on"><span class="dot"></span>활성</span>
-          <span style="font-size:22px;font-weight:700;">Notion AI</span>
-          <span style="font-size:13px;color:#9ca3af;">Notion-MCP 기반</span>
+    <!-- 상단 InfoBox -->
+    <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;margin:24px 36px 0;padding:28px 40px 24px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
+        <div style="flex:1;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <span style="background:#0d58ee;color:#fff;font-size:12px;font-weight:700;padding:3px 12px;border-radius:100px;">MCP</span>
+            <span style="background:#e5f1ff;color:#0d58ee;font-size:12px;font-weight:500;padding:3px 12px;border-radius:100px;">AI 통합</span>
+          </div>
+          <div style="font-size:22px;font-weight:700;color:#252b32;">Notion AI</div>
         </div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-s" onclick="go('ai-manage-edit')" style="padding:7px 16px;font-size:13px;">수정</button>
-          <button style="background:none;border:1px solid #ffd4d4;color:#ff3b3b;border-radius:4px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:inherit;" onclick="toast('비활성화되었습니다.')">비활성화</button>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+          <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#252b32" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-s" onclick="go('ai-manage-edit')" style="padding:7px 18px;font-size:13px;border-radius:100px;">수정</button>
+            <button style="background:none;border:1px solid #ff3b3b;color:#ff3b3b;border-radius:100px;padding:7px 18px;font-size:13px;cursor:pointer;font-family:inherit;" onclick="toast('비활성화되었습니다.')">비활성화</button>
+            <button style="background:#0c2e71;color:#fff;border:none;border-radius:100px;padding:7px 18px;font-size:13px;cursor:pointer;font-family:inherit;" onclick="toast('배포 요청되었습니다.')">AI 배포</button>
+          </div>
         </div>
       </div>
-      <p style="font-size:14px;color:#6b6b6b;margin-bottom:14px;">Notion MCP 기반 AI 관리 구성. 검색·페이지·데이터베이스 TOOL 9개 활성.</p>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
-        <div style="background:#fafbfd;border:1px solid #e0e5eb;border-radius:6px;padding:10px 14px;"><div style="font-size:11px;color:#9ca3af;margin-bottom:3px;">MCP 서버</div><div style="font-size:13px;font-weight:500;color:#0d58ee;cursor:pointer;" onclick="go('mcp-detail')">Notion-MCP</div></div>
-        <div style="background:#fafbfd;border:1px solid #e0e5eb;border-radius:6px;padding:10px 14px;"><div style="font-size:11px;color:#9ca3af;margin-bottom:3px;">활성 TOOL</div><div style="font-size:13px;font-weight:700;color:#0d58ee;">9 / 12</div></div>
-        <div style="background:#fafbfd;border:1px solid #e0e5eb;border-radius:6px;padding:10px 14px;"><div style="font-size:11px;color:#9ca3af;margin-bottom:3px;">현재 버전</div><div style="font-size:13px;font-weight:700;">Ver2_0310</div></div>
-        <div style="background:#fafbfd;border:1px solid #e0e5eb;border-radius:6px;padding:10px 14px;"><div style="font-size:11px;color:#9ca3af;margin-bottom:3px;">생성일</div><div style="font-size:13px;font-weight:500;">2025.03.12</div></div>
+      <div style="border-top:1px solid #e0e5eb;padding-top:16px;">
+        <p style="font-size:15px;color:#6b6b6b;line-height:1.6;">Notion MCP 기반 AI 관리 구성. 검색·페이지·데이터베이스 TOOL 9개 활성.</p>
       </div>
     </div>
 
-    <!-- TOOL / 버전 탭 + 액션 버튼 -->
-    <div style="background:#fff;border-bottom:1px solid #d4dbe4;padding:0 36px;display:flex;align-items:center;justify-content:space-between;">
-      <div style="display:flex;">
-        <button id="dtab-tool" class="dtabbtn" style="font-size:14px;padding:12px 18px;" onclick="switchDetailMainTab('tool')">TOOL</button>
-        <button id="dtab-ver" class="dtabbtn on" style="font-size:14px;padding:12px 18px;" onclick="switchDetailMainTab('ver')">버전</button>
+    <!-- 운영상태 행 -->
+    <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;margin:12px 36px 0;overflow:hidden;">
+      <div style="display:flex;align-items:center;">
+        <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">운영상태</div>
+        <div style="padding:14px 40px;font-size:15px;color:#252b32;display:flex;align-items:center;gap:8px;">
+          <span style="width:14px;height:14px;border-radius:50%;background:#0d58ee;display:inline-block;"></span>
+          게시완료
+        </div>
       </div>
-      <div id="detail-action-btn">
-        <button class="btn" onclick="toast('버전 생성 페이지로 이동')" style="background:#fff;border:1px solid #0d58ee;color:#0d58ee;padding:6px 14px;font-size:13px;border-radius:4px;display:flex;align-items:center;gap:5px;">
+    </div>
+
+    <!-- 기본설정 / 고급설정 탭 -->
+    <div style="margin:24px 36px 0;border-bottom:1px solid #d4dbe4;display:flex;">
+      <button id="dtab-basic" class="dtabbtn on" style="font-size:14px;padding:12px 18px;" onclick="switchAiDetailTab('basic')">기본 설정</button>
+      <button id="dtab-adv" class="dtabbtn" style="font-size:14px;padding:12px 18px;" onclick="switchAiDetailTab('adv')">고급 설정</button>
+    </div>
+
+    <!-- 기본 설정 패널 -->
+    <div id="ai-detail-basic" style="padding:24px 36px 48px;">
+
+      <!-- 기본 정보 테이블 -->
+      <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;overflow:hidden;margin-bottom:24px;">
+        <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">담당자</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">문진우</div>
+          <div style="background:#f5f6fa;border-left:1px solid #d4dbe4;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">생성일</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">2025-03-12</div>
+        </div>
+        <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">담당자 연락처</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">070-2232-4544</div>
+          <div style="background:#f5f6fa;border-left:1px solid #d4dbe4;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">이메일</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fa94958e939594d79b93ba8d9f989b889f89959c8ed4999597">[email&#160;protected]</a></div>
+        </div>
+        <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">해시태그</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">#Notion #MCP #AI통합</div>
+          <div style="background:#f5f6fa;border-left:1px solid #d4dbe4;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">부서명</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">개발팀</div>
+        </div>
+        <div style="display:flex;align-items:center;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">소속회사</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">웨버에소프트</div>
+          <div style="background:#f5f6fa;border-left:1px solid #d4dbe4;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;"></div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;"></div>
+        </div>
+      </div>
+
+      <!-- AI 정보 섹션 -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="font-size:16px;font-weight:700;color:#252b32;">AI 정보</div>
+        <button class="btn" onclick="go('ai-tool-create')" style="background:#fff;border:1px solid #0d58ee;color:#0d58ee;padding:6px 14px;font-size:13px;border-radius:4px;display:flex;align-items:center;gap:5px;">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#0d58ee" stroke-width="2" stroke-linecap="round"><path d="M6.5 1v11M1 6.5h11"/></svg>
-          버전 생성
+          TOOL 생성
         </button>
       </div>
-    </div>
-
-    <!-- TOOL 탭 패널 -->
-    <div id="detail-tool-panel" style="display:none;flex:1;overflow-y:auto;">
-      <div style="padding:24px 36px 48px;">
-        <!-- TOOL 생성 버튼 -->
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-          <div style="font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;">
-            TOOL 목록 <span style="font-size:13px;font-weight:400;color:#9ca3af;">9 / 12 활성</span>
-          </div>
-          <button class="btn btn-p" onclick="go('ai-tool-create')" style="font-size:13px;padding:7px 14px;">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M6.5 1v11M1 6.5h11"/></svg>
-            TOOL 생성
-          </button>
+      <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;overflow:hidden;">
+        <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">기본경로</div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">/ai/notion</div>
         </div>
-        <!-- TOOL 목록 테이블 (API 관리 메서드 탭 패턴) -->
-        <table class="dtbl">
-          <thead>
-            <tr>
-              <th style="width:52px;">번호</th>
-              <th style="width:120px;">유형</th>
-              <th>TOOL 이름</th>
-              <th style="width:180px;">PII 설정</th>
-              <th style="width:160px;">Schema Validation</th>
-              <th style="width:80px;">상태</th>
-              <th style="width:90px;">관리</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">9</td>
-              <td><span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:3px 10px;border-radius:100px;">검색</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-search</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">워크스페이스 전체 검색. AI 검색 플랜 시 외부 소스 포함.</div></td>
-              <td style="font-size:13px;color:#0f6e56;">이메일, 전화번호 · 마스킹</td>
-              <td><span class="pill p-on" style="font-size:12px;"><span class="dot"></span>ON</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">8</td>
-              <td><span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:3px 10px;border-radius:100px;">조회</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-fetch</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">URL/ID로 페이지·데이터베이스 내용 조회.</div></td>
-              <td style="font-size:13px;color:#0f6e56;">이메일 · 마스킹</td>
-              <td><span class="pill p-on" style="font-size:12px;"><span class="dot"></span>ON</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">7</td>
-              <td><span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:3px 10px;border-radius:100px;">조회</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-query-data-sources</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">데이터베이스 필터·정렬 조회.</div></td>
-              <td style="font-size:13px;color:#9ca3af;">미설정</td>
-              <td><span class="pill p-on" style="font-size:12px;"><span class="dot"></span>ON</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">6</td>
-              <td><span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:3px 10px;border-radius:100px;">조회</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-get-users</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">사용자 목록 조회.</div></td>
-              <td style="font-size:13px;color:#0f6e56;">이메일, 전화번호 · 마스킹</td>
-              <td><span class="pill p-on" style="font-size:12px;"><span class="dot"></span>ON</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">5</td>
-              <td><span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:3px 10px;border-radius:100px;">조회</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-get-teams</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">팀스페이스 목록 조회.</div></td>
-              <td style="font-size:13px;color:#9ca3af;">미설정</td>
-              <td><span class="pill p-off" style="font-size:12px;"><span class="dot"></span>OFF</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">4</td>
-              <td><span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:3px 10px;border-radius:100px;">조회</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-get-comments</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">댓글·토론 조회.</div></td>
-              <td style="font-size:13px;color:#9ca3af;">미설정</td>
-              <td><span class="pill p-off" style="font-size:12px;"><span class="dot"></span>OFF</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">3</td>
-              <td><span style="font-size:11px;font-weight:700;background:#f3efff;color:#7e59e8;padding:3px 10px;border-radius:100px;">생성</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-create-pages</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">페이지 생성. 템플릿·아이콘·커버 지원.</div></td>
-              <td style="font-size:13px;color:#ff3b3b;">이메일, 신용카드 · 요청거부</td>
-              <td><span class="pill p-on" style="font-size:12px;"><span class="dot"></span>ON</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">2</td>
-              <td><span style="font-size:11px;font-weight:700;background:#fffae6;color:#f9b300;padding:3px 10px;border-radius:100px;">수정</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-update-page</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">페이지 속성·내용 업데이트.</div></td>
-              <td style="font-size:13px;color:#ff3b3b;">이메일, 주민번호, 신용카드 · 요청거부</td>
-              <td><span class="pill p-on" style="font-size:12px;"><span class="dot"></span>ON</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <tr onclick="go('ai-tool-create')">
-              <td style="font-size:14px;color:#9ca3af;">1</td>
-              <td><span style="font-size:11px;font-weight:700;background:#f3efff;color:#7e59e8;padding:3px 10px;border-radius:100px;">생성</span></td>
-              <td><div style="font-weight:700;font-size:14px;">notion-create-database</div><div style="font-size:12px;color:#6b6b6b;margin-top:2px;">속성 스키마로 데이터베이스 생성.</div></td>
-              <td style="font-size:13px;color:#9ca3af;">미설정</td>
-              <td><span class="pill p-off" style="font-size:12px;"><span class="dot"></span>OFF</span></td>
-              <td><span class="pill p-on"><span class="dot"></span>활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">수정</button></td>
-            </tr>
-            <!-- 비활성 TOOL -->
-            <tr style="opacity:.5;">
-              <td style="font-size:14px;color:#9ca3af;">—</td>
-              <td><span style="font-size:11px;font-weight:700;background:#f5f5f5;color:#9ca3af;padding:3px 10px;border-radius:100px;">수정</span></td>
-              <td><div style="font-weight:700;font-size:14px;color:#9ca3af;">notion-update-data-source</div><div style="font-size:12px;color:#9ca3af;margin-top:2px;">데이터베이스 구조·속성 변경.</div></td>
-              <td style="font-size:13px;color:#9ca3af;">—</td>
-              <td style="color:#9ca3af;font-size:13px;">—</td>
-              <td><span class="pill p-off"><span class="dot"></span>비활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">추가</button></td>
-            </tr>
-            <tr style="opacity:.5;">
-              <td style="font-size:14px;color:#9ca3af;">—</td>
-              <td><span style="font-size:11px;font-weight:700;background:#f5f5f5;color:#9ca3af;padding:3px 10px;border-radius:100px;">생성</span></td>
-              <td><div style="font-weight:700;font-size:14px;color:#9ca3af;">notion-create-comment</div><div style="font-size:12px;color:#9ca3af;margin-top:2px;">댓글·답글 작성.</div></td>
-              <td style="font-size:13px;color:#9ca3af;">—</td>
-              <td style="color:#9ca3af;font-size:13px;">—</td>
-              <td><span class="pill p-off"><span class="dot"></span>비활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">추가</button></td>
-            </tr>
-            <tr style="opacity:.5;">
-              <td style="font-size:14px;color:#9ca3af;">—</td>
-              <td><span style="font-size:11px;font-weight:700;background:#f5f5f5;color:#9ca3af;padding:3px 10px;border-radius:100px;">이동</span></td>
-              <td><div style="font-weight:700;font-size:14px;color:#9ca3af;">notion-move-pages</div><div style="font-size:12px;color:#9ca3af;margin-top:2px;">페이지·DB 위치 이동.</div></td>
-              <td style="font-size:13px;color:#9ca3af;">—</td>
-              <td style="color:#9ca3af;font-size:13px;">—</td>
-              <td><span class="pill p-off"><span class="dot"></span>비활성</span></td>
-              <td onclick="event.stopPropagation()"><button class="btn-sm" onclick="go('ai-tool-create')">추가</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- 페이지네이션 -->
-        <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:20px;">
-          <button style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:#9ca3af;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <div style="width:32px;height:32px;border-radius:100px;background:#0d58ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;">1</div>
-          <button style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:#9ca3af;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">MCP 서버</div>
+          <div style="padding:14px 40px;font-size:15px;flex:1;">
+            <a href="#" onclick="window.open('?page=mcp-detail','_blank');return false;" style="color:#0c2e71;font-weight:500;text-decoration:underline;text-underline-offset:2px;">Notion-MCP ↗</a>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">정의된 TOOL</div>
+          <div style="padding:14px 40px;font-size:15px;flex:1;">
+            <span onclick="go('ai-manage-detail');setTimeout(()=>switchDetailMainTab('tool'),100);" style="color:#0c2e71;font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">9건</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;">
+          <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;align-self:stretch;display:flex;align-items:center;">버전</div>
+          <div style="flex:1;">
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;border-bottom:1px solid #e0e5eb;display:flex;align-items:center;gap:10px;">
+              <span style="background:#e8f8f5;color:#27b657;padding:3px 12px;border-radius:100px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:#27b657;"></span>운영중</span>
+              <span onclick="switchDetailMainTab('ver')" style="color:#0c2e71;font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-size:15px;">Ver2_0310</span>
+            </div>
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;display:flex;align-items:center;gap:10px;">
+              <span style="background:#fff0f3;color:#ff3b3b;padding:3px 12px;border-radius:100px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:#ff3b3b;"></span>일시정지</span>
+              <span onclick="switchDetailMainTab('ver')" style="color:#0c2e71;font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-size:15px;">Ver1_0210</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 버전 탭 패널 -->
-    <div id="detail-ver-panel" style="display:flex;flex:1;overflow:hidden;min-height:600px;">
+    <!-- 고급 설정 패널 -->
+    <div id="ai-detail-adv" style="display:none;padding:24px 36px 48px;">
 
-      <!-- 좌측 버전 SNB -->
-      <div style="width:232px;border-right:1px solid #e0e5eb;background:#fff;flex-shrink:0;overflow-y:auto;">
-
-        <!-- Ver2_0310 (활성) -->
-        <div style="border-bottom:1px solid #e0e5eb;">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 20px;cursor:pointer;background:#fff;" onclick="switchVer('v2')">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <span style="width:8px;height:8px;border-radius:50%;background:#0d58ee;flex-shrink:0;"></span>
-              <span style="font-size:15px;font-weight:500;color:#252b32;">Ver2_0310</span>
-            </div>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg>
+      <!-- CORS -->
+      <div style="margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:700;color:#252b32;margin-bottom:12px;">CORS</div>
+        <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;overflow:hidden;">
+          <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+            <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">CORS</div>
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">활성</div>
           </div>
-          <!-- TOOL 목록 (v2 활성) -->
-          <div id="snb-v2" style="padding:4px 11px 8px;">
-            <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;background:#f5f8fb;cursor:pointer;margin-bottom:2px;" onclick="switchTool('notion-search')">
-              <span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:2px 7px;border-radius:100px;">검색</span>
-              <span style="font-size:14px;color:#252b32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">notion-search</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;cursor:pointer;margin-bottom:2px;" onclick="switchTool('notion-fetch')">
-              <span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:2px 7px;border-radius:100px;">조회</span>
-              <span style="font-size:14px;color:#252b32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">notion-fetch</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;cursor:pointer;margin-bottom:2px;" onclick="switchTool('notion-create-pages')">
-              <span style="font-size:11px;font-weight:700;background:#f3efff;color:#7e59e8;padding:2px 7px;border-radius:100px;">생성</span>
-              <span style="font-size:14px;color:#252b32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">notion-create-pages</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;cursor:pointer;margin-bottom:2px;" onclick="switchTool('notion-update-page')">
-              <span style="font-size:11px;font-weight:700;background:#fffae6;color:#f9b300;padding:2px 7px;border-radius:100px;">수정</span>
-              <span style="font-size:14px;color:#252b32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">notion-update-page</span>
-            </div>
+          <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+            <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">허용 Method</div>
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">GET, POST, PUT, DELETE</div>
+          </div>
+          <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
+            <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">허용 Headers</div>
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">Content-Type, Authorization</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">허용 Origin</div>
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">*</div>
           </div>
         </div>
+        <p style="font-size:14px;color:#0d58ee;margin-top:8px;">※ Access-Control-Allow- (Method, Headers, Origin) 사용하는 정보입니다.</p>
+      </div>
 
-        <!-- Ver1_0210 (이전) -->
-        <div style="border-bottom:1px solid #e0e5eb;">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 20px;cursor:pointer;" onclick="switchVer('v1')">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <span style="width:8px;height:8px;border-radius:50%;background:#d4dbe4;flex-shrink:0;"></span>
-              <span style="font-size:15px;color:#6b6b6b;">Ver1_0210</span>
-            </div>
-            <svg id="snb-v1-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" style="transform:rotate(180deg)"><path d="M18 15l-6-6-6 6"/></svg>
-          </div>
-          <div id="snb-v1" style="display:none;padding:4px 11px 8px;">
-            <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;cursor:pointer;margin-bottom:2px;">
-              <span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:2px 7px;border-radius:100px;">검색</span>
-              <span style="font-size:14px;color:#252b32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">notion-search</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;cursor:pointer;margin-bottom:2px;">
-              <span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:2px 7px;border-radius:100px;">조회</span>
-              <span style="font-size:14px;color:#252b32;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">notion-fetch</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ver0_0101 (초기) -->
-        <div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 20px;cursor:pointer;" onclick="switchVer('v0')">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <span style="width:8px;height:8px;border-radius:50%;background:#d4dbe4;flex-shrink:0;"></span>
-              <span style="font-size:15px;color:#6b6b6b;">Ver0_0101</span>
-            </div>
-            <svg id="snb-v0-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" style="transform:rotate(180deg)"><path d="M18 15l-6-6-6 6"/></svg>
-          </div>
-          <div id="snb-v0" style="display:none;padding:4px 11px 8px;">
-            <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:4px;cursor:pointer;margin-bottom:2px;">
-              <span style="font-size:11px;font-weight:700;background:#e5f1ff;color:#0d58ee;padding:2px 7px;border-radius:100px;">검색</span>
-              <span style="font-size:14px;color:#252b32;">notion-search</span>
+      <!-- Rate Limit -->
+      <div style="margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:700;color:#252b32;margin-bottom:12px;">사용량 제한 (Rate Limit)</div>
+        <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;overflow:hidden;">
+          <div style="display:flex;align-items:center;">
+            <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">사용량</div>
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;display:flex;align-items:center;gap:10px;">
+              <span style="background:#f5f8fb;color:#252b32;padding:3px 12px;border-radius:100px;font-size:13px;font-weight:500;">초당</span>
+              <span><strong style="color:#0d58ee;">10,000건</strong> 요청가능</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 우측 버전 상세 -->
-      <div style="flex:1;overflow-y:auto;padding:24px 36px 48px;">
-
-        <!-- 버전 헤더 -->
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #f0f2f5;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="background:#e8f8f5;color:#0f6e56;border-radius:100px;padding:3px 12px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:#0f6e56;"></span>사용중</span>
-            <span style="font-size:18px;font-weight:700;">Ver2_0310</span>
-          </div>
-          <div style="display:flex;gap:8px;position:relative;">
-            <button class="btn-sm" onclick="toggleKebab('detail-kebab')" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;padding:0;">
-              <svg width="4" height="16" viewBox="0 0 4 16" fill="#252b32"><circle cx="2" cy="2" r="2"/><circle cx="2" cy="8" r="2"/><circle cx="2" cy="14" r="2"/></svg>
-            </button>
-            <div id="detail-kebab" style="display:none;position:absolute;right:0;top:36px;background:#fff;border:1px solid #d4dbe4;border-radius:10px;box-shadow:0 5px 10px rgba(53,71,117,.1);width:160px;padding:6px;z-index:10;">
-              <div style="padding:7px 10px;font-size:14px;color:#252b32;cursor:pointer;border-radius:4px;background:#f5f8fb;" onclick="toast('버전 일시정지')">버전 일시정지</div>
-              <div style="padding:7px 10px;font-size:14px;color:#252b32;cursor:pointer;border-radius:4px;" onclick="go('ai-manage-edit');document.getElementById('detail-kebab').style.display='none'">이 버전 수정</div>
+      <!-- 사용자별 한도 -->
+      <div style="margin-bottom:24px;">
+        <div style="font-size:16px;font-weight:700;color:#252b32;margin-bottom:12px;">사용자별 한도 제한</div>
+        <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;overflow:hidden;">
+          <div style="display:flex;align-items:center;">
+            <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">주기 및 한도</div>
+            <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;display:flex;align-items:center;gap:10px;">
+              <span style="background:#f3efff;color:#7e59e8;padding:3px 12px;border-radius:100px;font-size:13px;font-weight:500;">주</span>
+              <span>50,000건</span>
             </div>
           </div>
         </div>
-
-        <!-- TOOL 설정 현황 -->
-        <div style="margin-bottom:24px;">
-          <div style="font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;">TOOL 설정 현황 <span style="font-size:13px;font-weight:400;color:#9ca3af;">9 / 12 활성</span></div>
-          <div class="tl">
-            <div class="tl-sec">검색 · 조회</div>
-            <div class="tl-row"><div class="tl-ic">🔍</div><div class="tl-info"><div class="tl-name">notion-search <span class="bdg b-on">활성</span></div><div class="tl-desc">이메일·전화번호 PII 마스킹 / Schema Validation ON</div></div></div>
-            <div class="tl-row"><div class="tl-ic">📄</div><div class="tl-info"><div class="tl-name">notion-fetch <span class="bdg b-on">활성</span></div><div class="tl-desc">이메일 PII 마스킹 / Schema Validation ON</div></div></div>
-            <div class="tl-row"><div class="tl-ic">🗄️</div><div class="tl-info"><div class="tl-name">notion-query-data-sources <span class="bdg b-on">활성</span></div><div class="tl-desc">PII 미설정 / Schema Validation ON</div></div></div>
-            <div class="tl-row"><div class="tl-ic">👤</div><div class="tl-info"><div class="tl-name">notion-get-users <span class="bdg b-on">활성</span></div><div class="tl-desc">이메일·전화번호 PII 마스킹 / Schema Validation ON</div></div></div>
-            <div class="tl-row"><div class="tl-ic">👥</div><div class="tl-info"><div class="tl-name">notion-get-teams <span class="bdg b-on">활성</span></div><div class="tl-desc">PII 미설정 / Schema Validation OFF</div></div></div>
-            <div class="tl-row"><div class="tl-ic">💬</div><div class="tl-info"><div class="tl-name">notion-get-comments <span class="bdg b-on">활성</span></div><div class="tl-desc">PII 미설정 / Schema Validation OFF</div></div></div>
-            <div class="tl-sec" style="border-top:1px solid #f0f2f5;">생성 · 수정</div>
-            <div class="tl-row"><div class="tl-ic">✏️</div><div class="tl-info"><div class="tl-name">notion-create-pages <span class="bdg b-on">활성</span></div><div class="tl-desc">이메일·신용카드 PII 요청거부 / Schema Validation ON</div></div></div>
-            <div class="tl-row"><div class="tl-ic">🔄</div><div class="tl-info"><div class="tl-name">notion-update-page <span class="bdg b-on">활성</span></div><div class="tl-desc">이메일·주민번호·신용카드 PII 요청거부 / Schema Validation ON</div></div></div>
-            <div class="tl-row"><div class="tl-ic">📊</div><div class="tl-info"><div class="tl-name">notion-create-database <span class="bdg b-on">활성</span></div><div class="tl-desc">PII 미설정 / Schema Validation OFF</div></div></div>
-            <div class="tl-row dis"><div class="tl-ic">⚙️</div><div class="tl-info"><div class="tl-name">notion-update-data-source <span class="bdg b-off">비활성</span></div><div class="tl-desc">데이터베이스 구조·속성 변경.</div></div></div>
-            <div class="tl-row dis"><div class="tl-ic">💭</div><div class="tl-info"><div class="tl-name">notion-create-comment <span class="bdg b-off">비활성</span></div><div class="tl-desc">댓글·답글 작성.</div></div></div>
-            <div class="tl-row dis"><div class="tl-ic">📦</div><div class="tl-info"><div class="tl-name">notion-move-pages <span class="bdg b-off">비활성</span></div><div class="tl-desc">페이지·DB 위치 이동.</div></div></div>
-          </div>
-        </div>
-
-        <!-- 배포 내역 테이블 -->
-        <div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px;">
-            배포 내역 <span style="font-size:14px;font-weight:700;color:#0d58ee;">3</span>
-          </div>
-          <table class="dtbl">
-            <thead>
-              <tr>
-                <th style="width:60px;">번호</th>
-                <th style="width:180px;">배포 날짜</th>
-                <th>변경 내용</th>
-                <th style="width:120px;">스펙 다운로드</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="color:#9ca3af;font-size:14px;">3</td>
-                <td style="font-size:14px;">2025.03.10 14:32:11</td>
-                <td style="font-size:14px;">notion-create-pages PII 설정 추가 (신용카드 요청거부)</td>
-                <td onclick="event.stopPropagation()">
-                  <button class="btn-sm" style="display:flex;align-items:center;gap:4px;" onclick="toast('스펙 다운로드')">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#252b32" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v8M5 7l3 3 3-3M3 13h10"/></svg>
-                    다운로드
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td style="color:#9ca3af;font-size:14px;">2</td>
-                <td style="font-size:14px;">2025.03.05 10:18:44</td>
-                <td style="font-size:14px;">notion-update-page TOOL 활성화 및 PII 설정 (이메일·주민번호)</td>
-                <td onclick="event.stopPropagation()">
-                  <button class="btn-sm" style="display:flex;align-items:center;gap:4px;" onclick="toast('스펙 다운로드')">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#252b32" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v8M5 7l3 3 3-3M3 13h10"/></svg>
-                    다운로드
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td style="color:#9ca3af;font-size:14px;">1</td>
-                <td style="font-size:14px;">2025.03.01 09:00:00</td>
-                <td style="font-size:14px;">최초 생성 — Notion-MCP 연결, 기본 TOOL 9개 활성화</td>
-                <td onclick="event.stopPropagation()">
-                  <button class="btn-sm" style="display:flex;align-items:center;gap:4px;" onclick="toast('스펙 다운로드')">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#252b32" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v8M5 7l3 3 3-3M3 13h10"/></svg>
-                    다운로드
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- 페이지네이션 -->
-          <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:20px;">
-            <button style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:#9ca3af;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <div style="width:32px;height:32px;border-radius:100px;background:#0d58ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;">1</div>
-            <button style="width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:#9ca3af;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          </div>
-        </div>
-
       </div>
-    </div><!-- /detail-ver-panel -->
+
+      <!-- 요청제어 (아코디언) -->
+      <div>
+        <div style="background:#fff;border:1px solid #d4dbe4;border-radius:6px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 32px;border-bottom:1px solid #e0e5eb;cursor:pointer;" onclick="toggleAiAccordion('req-ctrl')">
+            <span style="font-size:15px;font-weight:500;color:#252b32;">요청제어</span>
+            <div id="req-ctrl-icon" style="width:32px;height:32px;border:1px solid #d4dbe4;border-radius:4px;display:flex;align-items:center;justify-content:center;">
+              <svg width="14" height="8" viewBox="0 0 14 8" fill="none"><path d="M1 1l6 6 6-6" stroke="#252b32" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div id="req-ctrl" style="overflow:hidden;max-height:300px;transition:max-height .3s ease;">
+            <table class="dtbl" style="margin:0;">
+              <thead><tr><th style="width:200px;">구분</th><th>Value</th><th style="width:100px;">전체보기</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span style="background:#e5f1ff;color:#0d58ee;padding:2px 10px;border-radius:100px;font-size:12px;font-weight:700;">쿼리</span> <span style="font-size:14px;">p-api-key-0501</span></td>
+                  <td style="font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:600px;">p-api-key-0501p-api-key-0501p-api-key-0501p-api-key-0501</td>
+                  <td><button class="btn-sm" onclick="toast('자세히 보기')">자세히</button></td>
+                </tr>
+                <tr>
+                  <td><span style="background:#f0fbff;color:#02add3;padding:2px 10px;border-radius:100px;font-size:12px;font-weight:700;">헤더</span> <span style="font-size:14px;">p-api-key-0501</span></td>
+                  <td style="font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:600px;">p-api-key-0501p-api-key-0501p-api-key-0501p-api-key-0501</td>
+                  <td><button class="btn-sm" onclick="toast('자세히 보기')">자세히</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -1412,7 +1249,7 @@ code{font-family:monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;bor
     </div>
   </div>
 </template>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── 라우팅 맵 ── */
 const PAGES = {
   'dashboard'       : { tpl: 't-dashboard',        sb: 'sb-dash' },
@@ -1620,6 +1457,34 @@ function updateToolChkState() {
   const master = document.getElementById('chk-all-tools');
   if (master) { master.checked = checked === all.length; master.indeterminate = checked > 0 && checked < all.length; }
 }
+/* ── AI 관리 상세 탭 전환 ── */
+function switchAiDetailTab(tab) {
+  const basic = document.getElementById('ai-detail-basic');
+  const adv = document.getElementById('ai-detail-adv');
+  const btnBasic = document.getElementById('dtab-basic');
+  const btnAdv = document.getElementById('dtab-adv');
+  if (!basic) return;
+  if (tab === 'adv') {
+    basic.style.display = 'none'; adv.style.display = '';
+    btnBasic && btnBasic.classList.remove('on');
+    btnAdv && btnAdv.classList.add('on');
+  } else {
+    basic.style.display = ''; adv.style.display = 'none';
+    btnAdv && btnAdv.classList.remove('on');
+    btnBasic && btnBasic.classList.add('on');
+  }
+}
+
+/* ── 요청제어 아코디언 ── */
+function toggleAiAccordion(id) {
+  const el = document.getElementById(id);
+  const icon = document.getElementById(id + '-icon');
+  if (!el) return;
+  const isOpen = el.style.maxHeight !== '0px' && el.style.maxHeight !== '';
+  el.style.maxHeight = isOpen ? '0px' : '300px';
+  if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
 /* ── 상세 페이지 버전 SNB ── */
 function switchVer(ver) {
   ['v1','v0'].forEach(v => {
@@ -1645,14 +1510,4 @@ function toggleKebab(id) {
 }
 
 /* ── Toast ── */
-function toast(msg) {
-  const t = document.getElementById('toast-el');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-/* ── 초기 진입 ── */
-go('mcp-list');
-</script>
-</body>
-</html>
+function toast(ms
