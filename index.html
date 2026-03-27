@@ -779,7 +779,7 @@ code{font-family:monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;bor
           <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">담당자 연락처</div>
           <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">070-2232-4544</div>
           <div style="background:#f5f6fa;border-left:1px solid #d4dbe4;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">이메일</div>
-          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fa94958e939594d79b93ba8d9f989b889f89959c8ed4999597">[email&#160;protected]</a></div>
+          <div style="padding:14px 40px;font-size:15px;color:#252b32;flex:1;">notion-ai@webaresoft.com</div>
         </div>
         <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
           <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">해시태그</div>
@@ -817,7 +817,7 @@ code{font-family:monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;bor
         <div style="display:flex;align-items:center;border-bottom:1px solid #e0e5eb;">
           <div style="background:#f5f6fa;border-right:1px solid #d4dbe4;width:250px;padding:14px 40px;font-size:15px;color:#252b32;flex-shrink:0;">정의된 TOOL</div>
           <div style="padding:14px 40px;font-size:15px;flex:1;">
-            <span onclick="go('ai-manage-detail');setTimeout(()=>switchDetailMainTab('tool'),100);" style="color:#0c2e71;font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">9건</span>
+            <span onclick="switchDetailMainTab('tool')" style="color:#0c2e71;font-weight:500;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">9건</span>
           </div>
         </div>
         <div style="display:flex;align-items:flex-start;">
@@ -1249,7 +1249,7 @@ code{font-family:monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;bor
     </div>
   </div>
 </template>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ── 라우팅 맵 ── */
 const PAGES = {
   'dashboard'       : { tpl: 't-dashboard',        sb: 'sb-dash' },
@@ -1423,11 +1423,12 @@ function delRow(btn) {
 
 /* ── 상세 페이지 메인 탭 전환 (TOOL / 버전) ── */
 function switchDetailMainTab(tab) {
-  const toolPanel = document.getElementById('detail-tool-panel');
-  const verPanel  = document.getElementById('detail-ver-panel');
-  const btnTool   = document.getElementById('dtab-tool');
-  const btnVer    = document.getElementById('dtab-ver');
-  const actionBtn = document.getElementById('detail-action-btn');
+  const main = document.getElementById('main');
+  const toolPanel = main && main.querySelector('#detail-tool-panel');
+  const verPanel  = main && main.querySelector('#detail-ver-panel');
+  const btnTool   = main && main.querySelector('#dtab-tool');
+  const btnVer    = main && main.querySelector('#dtab-ver');
+  const actionBtn = main && main.querySelector('#detail-action-btn');
   if (!toolPanel || !verPanel) return;
   if (tab === 'tool') {
     toolPanel.style.display = '';
@@ -1459,10 +1460,11 @@ function updateToolChkState() {
 }
 /* ── AI 관리 상세 탭 전환 ── */
 function switchAiDetailTab(tab) {
-  const basic = document.getElementById('ai-detail-basic');
-  const adv = document.getElementById('ai-detail-adv');
-  const btnBasic = document.getElementById('dtab-basic');
-  const btnAdv = document.getElementById('dtab-adv');
+  const main = document.getElementById('main');
+  const basic = main && main.querySelector('#ai-detail-basic');
+  const adv   = main && main.querySelector('#ai-detail-adv');
+  const btnBasic = main && main.querySelector('#dtab-basic');
+  const btnAdv   = main && main.querySelector('#dtab-adv');
   if (!basic) return;
   if (tab === 'adv') {
     basic.style.display = 'none'; adv.style.display = '';
@@ -1477,8 +1479,9 @@ function switchAiDetailTab(tab) {
 
 /* ── 요청제어 아코디언 ── */
 function toggleAiAccordion(id) {
-  const el = document.getElementById(id);
-  const icon = document.getElementById(id + '-icon');
+  const main = document.getElementById('main');
+  const el   = main ? main.querySelector('#' + id) : document.getElementById(id);
+  const icon = main ? main.querySelector('#' + id + '-icon') : document.getElementById(id + '-icon');
   if (!el) return;
   const isOpen = el.style.maxHeight !== '0px' && el.style.maxHeight !== '';
   el.style.maxHeight = isOpen ? '0px' : '300px';
@@ -1510,4 +1513,14 @@ function toggleKebab(id) {
 }
 
 /* ── Toast ── */
-function toast(ms
+function toast(msg) {
+  const t = document.getElementById('toast-el');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ── 초기 진입 ── */
+go('mcp-list');
+</script>
+</body>
+</html>
